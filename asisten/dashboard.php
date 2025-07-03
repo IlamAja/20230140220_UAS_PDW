@@ -1,71 +1,105 @@
 <?php
-// 1. Definisi Variabel untuk Template
-$pageTitle = 'Dashboard';
-$activePage = 'dashboard';
+session_start();
+include '../config.php';
 
-// 2. Panggil Header
-require_once 'templates/header.php'; 
+// Cek apakah user sudah login dan role-nya asisten
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'asisten') {
+    header("Location: ../login.php");
+    exit();
+}
+
+$nama_asisten = htmlspecialchars($_SESSION['nama']);
 ?>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    
-    <div class="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
-        <div class="bg-blue-100 p-3 rounded-full">
-            <svg class="w-6 h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Asisten - SIMPRAK</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* CSS Tambahan jika diperlukan untuk responsif lanjutan atau efek khusus */
+        /* Contoh untuk menyembunyikan/menampilkan elemen di mobile */
+        /* .hidden-mobile { display: none; } */
+        /* @media (min-width: 768px) { .hidden-mobile { display: block; } } */
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <nav class="bg-purple-700 p-4 text-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="dashboard.php" class="text-2xl font-extrabold tracking-tight hover:text-purple-200 transition-colors duration-200">SIMPRAK Asisten</a>
+
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="praktikum_management.php" class="text-white hover:text-purple-200 transition-colors duration-200 text-lg font-medium">Kelola Praktikum</a>
+                <a href="module_management.php?praktikum_id=1" class="text-white hover:text-purple-200 transition-colors duration-200 text-lg font-medium">Kelola Modul</a> <a href="report_inbox.php" class="text-white hover:text-purple-200 transition-colors duration-200 text-lg font-medium">Laporan Masuk</a>
+                <a href="user_management.php" class="text-white hover:text-purple-200 transition-colors duration-200 text-lg font-medium">Kelola Akun</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <span class="text-lg font-medium">Halo, <?php echo $nama_asisten; ?></span>
+                <a href="../logout.php" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow transition-colors duration-200">Logout</a>
+            </div>
+
+            <div class="md:hidden flex items-center">
+                <button id="menu-button" class="text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div>
-            <p class="text-sm text-gray-500">Total Modul Diajarkan</p>
-            <p class="text-2xl font-bold text-gray-800">12</p>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-purple-800 py-2 mt-2 rounded-lg">
+            <a href="praktikum_management.php" class="block px-4 py-2 text-white hover:bg-purple-700 transition-colors duration-200">Kelola Praktikum</a>
+            <a href="module_management.php?praktikum_id=1" class="block px-4 py-2 text-white hover:bg-purple-700 transition-colors duration-200">Kelola Modul</a>
+            <a href="report_inbox.php" class="block px-4 py-2 text-white hover:bg-purple-700 transition-colors duration-200">Laporan Masuk</a>
+            <a href="user_management.php" class="block px-4 py-2 text-white hover:bg-purple-700 transition-colors duration-200">Kelola Akun</a>
+            <hr class="border-purple-600 my-2">
+            <span class="block px-4 py-2 text-white">Halo, <?php echo $nama_asisten; ?></span>
+            <a href="../logout.php" class="block px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg mx-4 mt-2 text-center">Logout</a>
+        </div>
+    </nav>
+
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <div class="container mx-auto p-4 mt-6">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Selamat Datang di Dashboard Asisten, <?php echo $nama_asisten; ?>!</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Kelola Mata Praktikum</h2>
+                <p class="text-gray-700 mb-4">Tambah, edit, dan hapus data mata praktikum.</p>
+                <a href="praktikum_management.php" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-sm">Kelola Praktikum</a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Kelola Modul</h2>
+                <p class="text-gray-700 mb-4">Tambah, edit, dan hapus modul serta materi.</p>
+                <a href="praktikum_management.php" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-sm">Kelola Modul</a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Lihat Laporan Masuk</h2>
+                <p class="text-gray-700 mb-4">Lihat semua laporan yang dikumpulkan mahasiswa dan berikan nilai.</p>
+                <a href="report_inbox.php" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-sm">Lihat Laporan</a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Kelola Akun Pengguna</h2>
+                <p class="text-gray-700 mb-4">Tambah, edit, dan hapus akun mahasiswa dan asisten.</p>
+                <a href="user_management.php" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-sm">Kelola Akun</a>
+            </div>
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
-        <div class="bg-green-100 p-3 rounded-full">
-            <svg class="w-6 h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        </div>
-        <div>
-            <p class="text-sm text-gray-500">Total Laporan Masuk</p>
-            <p class="text-2xl font-bold text-gray-800">152</p>
-        </div>
-    </div>
-
-    <div class="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
-        <div class="bg-yellow-100 p-3 rounded-full">
-            <svg class="w-6 h-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        </div>
-        <div>
-            <p class="text-sm text-gray-500">Laporan Belum Dinilai</p>
-            <p class="text-2xl font-bold text-gray-800">18</p>
-        </div>
-    </div>
-</div>
-
-<div class="bg-white p-6 rounded-lg shadow-md mt-8">
-    <h3 class="text-xl font-bold text-gray-800 mb-4">Aktivitas Laporan Terbaru</h3>
-    <div class="space-y-4">
-        <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-4">
-                <span class="font-bold text-gray-500">BS</span>
-            </div>
-            <div>
-                <p class="text-gray-800"><strong>Budi Santoso</strong> mengumpulkan laporan untuk <strong>Modul 2</strong></p>
-                <p class="text-sm text-gray-500">10 menit lalu</p>
-            </div>
-        </div>
-        <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-4">
-                <span class="font-bold text-gray-500">CL</span>
-            </div>
-            <div>
-                <p class="text-gray-800"><strong>Citra Lestari</strong> mengumpulkan laporan untuk <strong>Modul 2</strong></p>
-                <p class="text-sm text-gray-500">45 menit lalu</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<?php
-// 3. Panggil Footer
-require_once 'templates/footer.php';
-?>
+</body>
+</html>
