@@ -125,7 +125,7 @@ $conn->close();
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-    <nav class="bg-purple-700 p-4 text-white flex justify-between items-center">
+    <nav class="bg-blue-600 p-4 text-white flex justify-between items-center">
         <a href="dashboard.php" class="text-xl font-bold">SIMPRAK Asisten</a>
         <div>
             <span>Halo, <?php echo $nama_asisten; ?> (Asisten)</span>
