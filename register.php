@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+session_start(); // Mulai session
 
 $message = '';
 
@@ -36,10 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_insert->bind_param("ssss", $nama, $email, $hashed_password, $role);
 
             if ($stmt_insert->execute()) {
-                header("Location: login.php?status=registered");
+                // Gunakan session untuk pesan sukses sebelum redirect
+                $_SESSION['status_message'] = "Registrasi berhasil! Silakan login.";
+                $_SESSION['status_type'] = "success";
+                header("Location: login.php");
                 exit();
             } else {
-                $message = "Terjadi kesalahan. Silakan coba lagi.";
+                $message = "Terjadi kesalahan. Silakan coba lagi. " . $conn->error;
             }
             $stmt_insert->close();
         }
@@ -53,51 +57,52 @@ $conn->close();
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Registrasi Pengguna</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background-color: #fff; padding: 20px 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 320px; }
-        h2 { text-align: center; color: #333; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #555; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .btn { background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
-        .btn:hover { background-color: #218838; }
-        .message { color: red; text-align: center; margin-bottom: 15px; }
-        .login-link { text-align: center; margin-top: 15px; }
-        .login-link a { color: #007bff; text-decoration: none; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi Pengguna - SIMPRAK</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h2>Registrasi</h2>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal flex justify-center items-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registrasi Akun</h2>
+
         <?php if (!empty($message)): ?>
-            <p class="message"><?php echo $message; ?></p>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline"><?php echo $message; ?></span>
+            </div>
         <?php endif; ?>
+        <?php if (isset($_SESSION['status_message']) && $_SESSION['status_type'] == 'success'): ?>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline"><?php echo $_SESSION['status_message']; unset($_SESSION['status_message'], $_SESSION['status_type']); ?></span>
+            </div>
+        <?php endif; ?>
+
         <form action="register.php" method="post">
-            <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" name="nama" required>
+            <div class="mb-4">
+                <label for="nama" class="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+            <div class="mb-6">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
-            <div class="form-group">
-                <label for="role">Daftar Sebagai</label>
-                <select id="role" name="role" required>
+            <div class="mb-6">
+                <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Daftar Sebagai</label>
+                <select id="role" name="role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     <option value="mahasiswa">Mahasiswa</option>
                     <option value="asisten">Asisten</option>
                 </select>
             </div>
-            <button type="submit" class="btn">Daftar</button>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Daftar</button>
+            </div>
         </form>
-        <div class="login-link">
-            <p>Sudah punya akun? <a href="login.php">Login di sini</a></p>
+        <div class="text-center mt-4">
+            <a href="login.php" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg inline-block transition-colors duration-200 shadow w-full">Login di sini</a>
+            <a href="katalog_praktikum.php" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg inline-block transition-colors duration-200 shadow w-full mt-2">&larr; Lihat Katalog Praktikum</a>
         </div>
     </div>
 </body>
