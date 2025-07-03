@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+include '../config.php';
 
 // Pastikan hanya mahasiswa yang sudah login yang bisa mengakses ini
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $module_id) {
     if ($result_check_enrollment->num_rows === 0) {
         $_SESSION['message'] = "Anda tidak terdaftar di praktikum untuk modul ini.";
         $_SESSION['message_type'] = "error";
-        header("Location: detail_praktikum.php?id=" . $praktikum_id_redirect);
+        header("Location: ../detail_praktikum.php?id=" . $praktikum_id_redirect);
         exit();
     }
     $stmt_check_enrollment->close();
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $module_id) {
     if ($result_check_report->num_rows > 0) {
         $_SESSION['message'] = "Anda sudah mengunggah laporan untuk modul ini. Untuk memperbarui, hubungi asisten.";
         $_SESSION['message_type'] = "warning";
-        header("Location: detail_praktikum.php?id=" . $praktikum_id_redirect);
+        header("Location: ../detail_praktikum.php?id=" . $praktikum_id_redirect);
         exit();
     }
     $stmt_check_report->close();
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $module_id) {
         } else {
             // Buat nama file unik untuk mencegah konflik
             $new_file_name = uniqid('laporan_', true) . '.' . $file_ext;
-            $upload_path = 'uploads/laporan/' . $new_file_name; // Path relatif dari root proyek
+            $upload_path = '../uploads/laporan/' . $new_file_name; // Path relatif dari root proyek
 
             if (move_uploaded_file($file_tmp_name, $upload_path)) {
                 // Simpan info laporan ke database
@@ -114,6 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $module_id) {
 $conn->close();
 
 // Redirect kembali ke halaman detail praktikum
-header("Location: detail_praktikum.php?id=" . ($praktikum_id_redirect ?: '')); // Fallback jika praktikum_id tidak ditemukan
+header("Location: ../detail_praktikum.php?id=" . ($praktikum_id_redirect ?: '')); // Fallback jika praktikum_id tidak ditemukan
 exit();
 ?>

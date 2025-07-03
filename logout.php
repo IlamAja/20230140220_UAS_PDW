@@ -17,7 +17,7 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // Redirect ke halaman login, dengan menyertakan nama folder proyek
-// PENTING: Ganti '20230140216_UAS_PDW' dengan nama folder proyek Anda yang sebenarnya di htdocs
-header("Location: http://localhost/20230140216_UAS_PDW/login.php");
+
+header("Location: http://localhost/20230140220_UAS_PDW/login.php");
 exit();
 ?>

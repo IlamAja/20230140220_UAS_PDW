@@ -101,6 +101,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'mahasiswa') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Praktikum: <?php echo htmlspecialchars($praktikum['nama_praktikum']); ?> - SIMPRAK</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
@@ -202,7 +203,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'mahasiswa') {
 
                             <?php else: ?>
                                 <p class="text-gray-600 mb-2">Anda belum mengumpulkan laporan untuk modul ini.</p>
-                                <form action="upload_laporan.php" method="POST" enctype="multipart/form-data" class="mt-4">
+                                <form action="mahasiswa/upload_laporan.php" method="POST" enctype="multipart/form-data" class="mt-4">
                                     <input type="hidden" name="module_id" value="<?php echo htmlspecialchars($modul['id']); ?>">
                                     <label for="file_laporan_<?php echo $modul['id']; ?>" class="block text-gray-700 text-sm font-bold mb-2">Pilih File Laporan (PDF/DOCX)</label>
                                     <input type="file" id="file_laporan_<?php echo $modul['id']; ?>" name="file_laporan" accept=".pdf,.docx" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">

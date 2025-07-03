@@ -18,6 +18,7 @@ $nama_asisten = htmlspecialchars($_SESSION['nama']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Asisten - SIMPRAK</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
     <style>
         /* CSS Tambahan jika diperlukan untuk responsif lanjutan atau efek khusus */
         /* Contoh untuk menyembunyikan/menampilkan elemen di mobile */
@@ -27,7 +28,7 @@ $nama_asisten = htmlspecialchars($_SESSION['nama']);
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-    <nav class="bg-purple-700 p-4 text-white shadow-md">
+    <nav class="bg-blue-600 p-4 text-white shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <a href="dashboard.php" class="text-2xl font-extrabold tracking-tight hover:text-purple-200 transition-colors duration-200">SIMPRAK Asisten</a>
 

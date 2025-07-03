@@ -1,0 +1,105 @@
+/* style.css - Tema Cokelat Krem dengan Font Putih */
+
+/* Warna dasar (diperbarui) */
+:root {
+    --color-main-bg: #4A3C32; /* Cokelat Gelap untuk latar belakang utama */
+    --color-secondary-bg: #F5EECE; /* Krem untuk latar belakang elemen/kartu */
+    --color-text-primary: #FFFFFF; /* Putih untuk teks utama */
+    --color-text-secondary: #E0E0E0; /* Putih sedikit abu-abu untuk teks sekunder */
+    --color-accent-brown: #8D6B5F; /* Cokelat sedang untuk aksen */
+    --color-accent-cream: #FFF8E1; /* Krem terang untuk aksen */
+}
+
+body {
+    background-color: var(--color-main-bg); /* Menggunakan cokelat gelap */
+    color: var(--color-text-primary); /* Menggunakan warna teks putih */
+    font-family: 'Poppins', sans-serif; /* Tetap pakai font modern jika sudah di-import */
+    /* Anda bisa tambahkan tekstur kayu atau pola abstrak cokelat jika mau */
+    /* background-image: url('https://www.transparenttextures.com/patterns/clean-textile.png'); */
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Navbar */
+.bg-blue-600 { /* Ganti warna navbar Tailwind */
+    background-color: var(--color-accent-brown); /* Cokelat aksen */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.text-white { /* Pastikan teks di navbar tetap putih */
+    color: var(--color-text-primary);
+}
+
+/* Header H1 */
+h1.text-3xl {
+    color: var(--color-accent-cream); /* Krem terang untuk judul */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Efek glow putih lembut */
+}
+
+/* Kotak Konten (seperti detail praktikum, modul) */
+.bg-white.rounded-lg.shadow-md { /* Ganti latar belakang putih Tailwind */
+    background-color: var(--color-secondary-bg); /* Krem untuk kotak */
+    color: #4A3C32; /* Teks di dalam kotak bisa cokelat gelap agar terbaca */
+    border: 1px solid var(--color-accent-brown); /* Border cokelat */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Bayangan lembut */
+    border-radius: 10px; /* Sedikit membulat */
+}
+
+/* Teks paragraf di dalam kotak */
+.bg-white.rounded-lg.shadow-md p.text-gray-700 {
+    color: #333; /* Pastikan teks di dalam kotak terbaca di latar krem */
+}
+
+/* Tombol */
+.bg-blue-500, .bg-green-500, .bg-red-500, .bg-purple-500, .bg-gray-200 { /* Contoh tombol Tailwind */
+    border-radius: 6px; /* Sedikit membulat */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    color: var(--color-text-primary); /* Pastikan teks tombol putih */
+}
+
+.hover:bg-blue-600:hover, .hover:bg-green-600:hover, .hover:bg-red-600:hover, .hover:bg-purple-600:hover, .hover:bg-gray-300:hover {
+    transform: translateY(-1px); /* Efek sedikit naik saat hover */
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Sesuaikan warna tombol */
+.bg-blue-500 { background-color: var(--color-accent-brown); }
+.bg-blue-500:hover { background-color: #6D4C41; } /* Lebih gelap saat hover */
+
+.bg-green-500 { background-color: #5C4033; } /* Cokelat lebih gelap */
+.bg-green-500:hover { background-color: #4A3C32; }
+
+.bg-red-500 { background-color: #B05244; } /* Cokelat kemerahan */
+.bg-red-500:hover { background-color: #9C3A2B; }
+
+.bg-purple-500 { background-color: #7A6054; } /* Cokelat keunguan */
+.bg-purple-500:hover { background-color: #654E41; }
+
+.bg-gray-200 { /* Tombol kembali */
+    background-color: var(--color-accent-cream);
+    color: var(--color-main-bg); /* Teks cokelat gelap */
+}
+.bg-gray-200:hover {
+    background-color: #FFF3C9;
+    color: var(--color-main-bg);
+}
+
+
+/* Link (di luar tombol) */
+a.text-blue-500 { /* Contoh link biru Tailwind */
+    color: var(--color-accent-brown); /* Cokelat aksen */
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+a.text-blue-500:hover {
+    color: #6D4C41; /* Cokelat lebih gelap saat hover */
+}
+
+/* Pesan Feedback (Success, Error, Warning) */
+.bg-green-100 { background-color: rgba(92, 64, 51, 0.5); border-color: #5C4033; color: var(--color-text-primary); } /* Background cokelat transparan */
+.bg-red-100 { background-color: rgba(176, 82, 68, 0.5); border-color: #B05244; color: var(--color-text-primary); }
+.bg-yellow-100 { background-color: rgba(255, 248, 225, 0.5); border-color: var(--color-accent-cream); color: var(--color-main-bg); } /* Teks hitam agar terbaca */
+
+hr {
+    border-top: 1px solid var(--color-accent-brown);
+}
